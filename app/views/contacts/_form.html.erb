@@ -1,0 +1,81 @@
+<%= form_tag('/contacts/create', id: "signfreeForm", multipart: true, class: "form-horizontal") do %>
+    <div class="form-group">
+      <label for="inputContactName" class="col-sm-2 control-label">
+        Name <span>*</span>
+      </label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="exampleInputName" name="contact[name]" placeholder="Enter Name" min="4" required />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputContactEmail" class="col-sm-2 control-label">
+        Email <span>*</span>
+      </label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" id="exampleInputEmail1" name="contact[email]" placeholder="Enter your valid E-Mail" required  />
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">
+          Create
+        </button>
+      </div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#signfreeForm').on('submit', function (e) {
+            e.preventDefault();
+            var emailflag = false;
+            var validateLength = $('.form-control').length;
+            var mail_exits = "Your details already exist on the system";
+            var count = 0;
+            $('.form-control').each(function () {
+                if ($(this).val() == '') {
+                    count += 1;
+                }
+            });
+            if (count != 0 && emailflag == false) {
+                if ($("#exampleInputEmail1").val() != "") {
+                    var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+                    if (reg.test($("#exampleInputEmail1").val()) == false) {
+                        alert("Please enter valid Email-id.");
+                        $("#exampleInputEmail1").focus();
+                    }
+                    else {
+                        emailflag = true
+                        if (emailflag) {
+                            alert("Fields marked with a red asterisk* are mandatory");
+                            $("#exampleInputName").focus();
+                        }
+                    }
+                }
+                else {
+                    alert("Fields marked with a red asterisk* are mandatory");
+                    $("#exampleInputName").focus();
+                }
+            }
+            else {
+                $.ajax({
+                    url: '/contacts/create',
+                    type: 'POST',
+                    data: $('#signfreeForm').serialize(),
+                    dataType: 'json',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                        $("#loading_indicator_home").show();
+                        $('.inner_lt').hide();
+                    },
+                    success: function (data) {
+                        alert(data.message);
+                        if (typeof data.redirect_url != "undefined" && data.redirect_url != "") {
+                            window.location.href = data.redirect_url;
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>

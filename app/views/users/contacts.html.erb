@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-12">
+    <a class="btn btn-default pull-right" href="/contacts/new" role="button">New contact</a>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>E-Mail</th>
+        <th>Status</th>
+        <th>Added At</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @contacts.each.with_index do |value, index| %>
+          <tr class="active">
+            <td><%= index+1 %></td>
+            <td><%= value.name %></td>
+            <td><%= value.email %></td>
+            <td><%= value.status %></td>
+            <td><%= value.created_at.strftime("%v") %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
