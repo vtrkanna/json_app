@@ -2,17 +2,17 @@
   <div class="col-md-6">
   </div>
   <div class="col-md-6">
-    <%= form_tag('/upload', id: "signfreeForm", multipart: true) do %>
+    <%= form_tag('/upload', id: "signfreeForm", multipart: true,  autocomplete: "off" ) do %>
         <!--E-Mail start-->
         <div class="form-group">
           <label for="InputEmail">E-Mail<span>*</span></label>
-          <input type="email" class="form-control" id="exampleInputEmail1" name="login[email]" placeholder="Enter your valid E-Mail" required>
+          <input type="email" class="form-control" id="exampleInputEmail1" name="login[email]" placeholder="Enter your valid E-Mail" autocomplete="off" required>
         </div>
         <!--E-Mail end-->
         <!--Password start-->
         <div class="form-group">
           <label for="InputPassword">Password<span>*</span></label>
-          <input type="password" class="form-control" id="InputPassword" name="login[password]" placeholder="Enter your password" required>
+          <input type="password" class="form-control" id="InputPassword" name="login[password]" placeholder="Enter your password" autocomplete="off" required>
         </div>
         <!--Password end-->
         <div class="checkbox"><label><input type="checkbox">Remember me</label></div>

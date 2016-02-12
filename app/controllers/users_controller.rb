@@ -13,14 +13,14 @@ class UsersController < ApplicationController
     @user = User.where("UPPER(email) = UPPER(?)", email.upcase.strip).first
     unless @user
       message = 'Username does not exist'
-      redirect_to login
+      render json: {message: message, redirect_url: "/"}
     else
       if @user.password.blank?
         message = 'User must set password before first login'
-        redirect_to login
+        render json: {message: message, redirect_url: "/"}
       elsif @user.password != params[:login][:password]
         message = 'Password is incorrect'
-        redirect_to login
+        render json: {message: message, redirect_url: "/"}
       else
         cookies[:login] = {:value => 'true'}
         expiry_time = 1.day.from_now
@@ -44,6 +44,12 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         AppMailer.invite_user(@user, "Verify your email").deliver!
+
+        cookies[:login] = {:value => 'true'}
+        expiry_time = 1.day.from_now
+        cookies[:user_id] = {:value => @user.id, :expires => expiry_time}
+        session[:user_id] = @user.id
+
         format.json { render json: {message: 'User was successfully created.', redirect_url: "/users/contacts"} }
         format.html { redirect_to :login, notice: 'User was successfully created.' }
       else
@@ -54,6 +60,7 @@ class UsersController < ApplicationController
   end
 
   def contacts
+   debugger
     @user = User.find_by_id(session[:user_id])
     @contacts = @user.contacts
   end
