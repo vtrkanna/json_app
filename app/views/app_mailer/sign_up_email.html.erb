@@ -128,7 +128,8 @@
                     <tbody>
                     <tr>
                       <td valign="top" align="left" style="padding:10px 10px 10px 10px;font-size:20px;border-bottom: 1px solid #ccc;font-family:'Roboto';line-height:24px;">
-                        <font face="Roboto">Dear user,
+<%debugger%>
+                        <font face="Roboto">Dear <%= @contact.name %> ,
                           <a href="" style="color:#4c9ad4;text-decoration: none;"></a></font></td>
                     </tr>
                     </tbody>
@@ -140,16 +141,15 @@
               <tr>
                 <td valign="top" align="left" style="padding:10px 10px 10px 10px;font-size:18px;font-family:'Roboto';line-height:24px;">
                   <font face="Roboto">
-                    Thank you for signing up.!<br>Click on the link below to activate your account:
+                    <%= @contact.user.name %> Added you contact list <br> Click on the link below to Accept/Reject.
                   </font>
                 </td>
               </tr>
               <tr>
                 <td valign="top" align="left" style="padding:10px 10px 10px 10px;font-size:18px;font-family:'Roboto';line-height:24px;">
-                  <a href="#"><img src="http://<%= @host %>/assets/confirmbutton.jpeg" alt="Confirm Email Address" style="vertical-align: top"></a>
+                  <a href="<%= %>"><img src="http://<%= @host %>/assets/confirmbutton.jpeg" alt="Confirm Email Address" style="vertical-align: top"></a>
                 </td>
               </tr>
-
               <tr>
                 <td valign="top" align="left" style="padding:20px 10px 0px 10px;font-size:18px;font-family:'Roboto';line-height:24px;">
                   <font face="Roboto">

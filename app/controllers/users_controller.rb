@@ -60,7 +60,6 @@ class UsersController < ApplicationController
   end
 
   def contacts
-   debugger
     @user = User.find_by_id(session[:user_id])
     @contacts = @user.contacts
   end

@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
   has_many :contacts
-  has_many :pending_contacts, -> { where "contacts.status = 'pending'"}, through: :contacts
-  has_many :accepted_contacts, -> { Contact.accepted }, through: :contacts
-  has_many :rejected_contacts, -> { Contact.rejected }, through: :contacts
+  has_many :pending_contacts, -> { where(status: "pending")}, class_name: "Contact"
+  has_many :accepted_contacts, -> { where(status: "accepted")}, class_name: "Contact"
+  has_many :rejected_contacts, -> { where(status: "rejected")}, class_name: "Contact"
 
   validates :name, :presence => true, :length => {:minimum => 5}
   validates :password, :presence => true, :length => {:minimum => 6} #, :format => //

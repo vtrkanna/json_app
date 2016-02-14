@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     post 'verify_login', :on => :collection
   end
 
+  match 'contact_acccept/:id', :to => 'users#'
+
   root 'users#login'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

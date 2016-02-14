@@ -19,9 +19,9 @@ class ContactsController < ApplicationController
         @contact = Contact.new(contact_params)
         respond_to do |format|
           if @contact.save
-            AppMailer.sign_up_email(@contact, "Verify your email").deliver!
+            AppMailer.sign_up_email(@contact, request.host, "Acceptance mail").deliver!
             format.html { redirect_to @contact, notice: 'Contact was successfully created.' }
-            format.json { render json: {message: 'Contact was successfully created.'} }
+            format.json { render json: {message: 'Contact was successfully created.', redirect_url: "/users/contacts"} }
           else
             format.json { render json: @contact.errors, status: :unprocessable_entity }
             format.html { render :new }
@@ -30,6 +30,20 @@ class ContactsController < ApplicationController
       end
     else
       format.json { render json: {message: 'Please provide user id.'} }
+    end
+  end
+
+  def edit
+    @contact = Contact.find_by_id(params[:id])
+  end
+
+  def contact_acccept
+    @contact = Contact.find_by_token_key(params[:id])
+    @valid = false
+    unless @contact.blank?
+      @valid = true
+    else
+      
     end
   end
 

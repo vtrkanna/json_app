@@ -5,9 +5,10 @@ class AppMailer < ActionMailer::Base
     mail(to: user.email, subject: sub, from: "vtrkanna@yahoo.com")
   end
 
-  def sign_up_email(user, sub)
-    @user = Contact.find_by_email user.email
-    mail(to: user.email, subject: sub)
+  def sign_up_email(contact, host, sub)
+    @contact = contact
+    @host = host
+    mail(to: contact.email, subject: sub)
   end
 
 end
