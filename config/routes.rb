@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     post 'verify_login', :on => :collection
   end
 
-  match 'contact_acccept/:id', :to => 'users#'
+  #match 'contact_acccept/:id', :to => 'users#contact_acccept'
 
   root 'users#login'
   # The priority is based upon order of creation: first created -> highest priority.
